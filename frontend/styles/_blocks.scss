@@ -43,7 +43,6 @@
   line-height: 54px;
   color: var(--black-primary);
   position: relative;
-  margin-bottom: 45px;
   &_line {
     position: relative;
     text-align: center;
@@ -147,4 +146,7 @@
       0px 0px 8px rgba(0, 0, 0, 0.2);
   }
 
+}
+.input-base{
+  width: 100%;
 }
