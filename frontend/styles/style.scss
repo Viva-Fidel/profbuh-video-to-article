@@ -1,0 +1,36 @@
+@import "./_nullstyle.scss";
+@import "./_fonts.scss";
+@import "./_vars.scss";
+@import "./mixins/mediamixin.scss";
+@import "./_common.scss";
+@import "./_mygrid.scss";
+@import "./_blocks.scss";
+@import "./_extends.scss";
+
+/* hero bg (blue) */
+.first-screen-bg {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 30%;
+  min-width: 200px;
+  height: 100vh;
+  background: var(--blue-primary);
+  border-radius: 0px 0px 0px 200px;
+  z-index: -1;
+}
+/* hero section */
+.hero {
+  min-height: 100vh;
+  padding-top: var(--header-footer-height);
+  @extend %flex-center;
+}
+.hero__subtitle{
+    text-align: center;
+    color: var(--white-primary);
+}
+.hero__form{
+    background:rgb(116, 116, 116);
+    border-radius:15px;
+
+}

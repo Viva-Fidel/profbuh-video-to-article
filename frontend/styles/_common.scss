@@ -1,0 +1,59 @@
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  min-width: 307px;
+  overflow-x: hidden;
+  font-family: var(--font-inter);
+  color: var(--black-primary);
+  display: flex;
+  flex-direction: column;
+}
+main {
+  flex: 1 1 auto;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin: 0;
+}
+
+ul,
+ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  color: inherit;
+  outline: none;
+}
+img {
+  max-width: 100%;
+}
+button {
+  cursor: pointer;
+  font-family: var(--font-inter);
+}
+.btn-reset {
+  border: none;
+  outline: none;
+  background-color: none;
+  padding: 0;
+  border-radius: 0;
+}
+.accent-text {
+  color: var(--accent-color);
+}

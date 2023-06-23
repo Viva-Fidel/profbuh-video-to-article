@@ -1,0 +1,31 @@
+:root{
+    --blue-primary:rgb(7, 133, 206);
+    --blue-primary-hover:rgb(55, 170, 236);
+    --blue-primary-active:rgb(4, 118, 184);
+    --blue-primary-focus:rgb(7, 102, 156);
+    --white-primary:rgba(254, 254, 254,1);
+    --black-primary:rgba(51, 51, 51, 1);
+    --accent-color:#e21a43;
+    --accent-color-hover:rgb(239, 49, 87);
+    --accent-color-active:rgb(206, 17, 55);
+    --accent-color-focus:rgb(170, 22, 52);
+    --grey-color: rgb(228, 227, 227);
+    --grey-color-hover:rgb(217, 217, 217);
+    --grey-color-active:rgb(195, 195, 195);
+    --disabled-color: rgb(169, 169, 169);
+    /* fonts */
+  --font-inter: "Inter", sans-serif;
+ /* transition */
+  --transition-duration: 0.3s;
+  /* height */
+  --header-footer-height: 60px;
+  /* fonts-sizes */
+  --inputFontSize: 17px;
+  --buttonsFontSize: 17px;
+  /* sizes */
+}
+$sm: 580px;
+$tb: 750px;
+$lp: 1000px;
+$dt: 1300px;
+
