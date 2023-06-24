@@ -6,31 +6,110 @@
 @import "./_mygrid.scss";
 @import "./_blocks.scss";
 @import "./_extends.scss";
+@import "./_libs.scss";
 
 /* hero bg (blue) */
 .first-screen-bg {
-  position: absolute;
-  right: 0;
+  position: fixed;
+  left: 0;
   top: 0;
-  width: 30%;
-  min-width: 200px;
-  height: 100vh;
+  bottom: 0;
+  min-height: 100vh;
+  height: 100%;
   background: var(--blue-primary);
-  border-radius: 0px 0px 0px 200px;
   z-index: -1;
 }
+
 /* hero section */
 .hero {
-  min-height: 100vh;
   padding-top: var(--header-footer-height);
-  @extend %flex-center;
+  height: 100vh;
 }
-.hero__subtitle{
-    text-align: center;
-    color: var(--white-primary);
-}
-.hero__form{
-    background:rgb(116, 116, 116);
-    border-radius:15px;
 
+
+.hero-form {
+  background: var(--white-color);
+  padding: 20px;
+  min-height: 300px;
+  border-radius: 15px;
+  box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.2);
+}
+
+.hero-form__title,
+.hero-form__subtitle {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.hero-form__label {
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
+}
+
+.hero-form__text {
+  align-self: flex-start;
+}
+
+.hero-form__wrap_timebox {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.input-group {
+  position: relative;
+}
+
+.hero-form__input_link {
+  width: 100%;
+}
+
+.hero-form__input-icon_link {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.checkbox {
+  display: none;
+}
+
+.checkbox_fake {
+  display: block;
+  width: 20px;
+  border-radius: 5px;
+  height: 20px;
+  border: 2px solid var(--blue-primary);
+  position: relative;
+
+  &::before {
+    content: "✔";
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+    color: var(--approve-color);
+    opacity: 0;
+  }
+}
+
+.checkbox:checked+.checkbox_fake::before {
+  opacity: 1;
+}
+
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.checkbox__text {
+  margin-left: 10px;
 }

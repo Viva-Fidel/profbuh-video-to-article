@@ -1,0 +1,18 @@
+/* tippy box styles*/
+.tippy-box[data-theme~="white"] {
+  background-color: var(--grey-color);
+  color: var(--black-primary);
+}
+.tippy-box[data-theme~="white"][data-placement^="top"] > .tippy-arrow::before {
+  border-top-color: var(--grey-color);
+}
+.tooltip-text {
+  font-size: 13px;
+  text-align: center;
+}
+.hero-form__tooltip-box {
+  display: none;
+}
+.hero-form__question{
+  display: inline-block;
+}

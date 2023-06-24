@@ -7,6 +7,12 @@ const autoprefixer = require("gulp-autoprefixer");
 const sourcemaps = require("gulp-sourcemaps");
 const cssnano = require("gulp-cssnano");
 const gulpif = require("gulp-if");
+const imagemin = require("gulp-imagemin");
+const TerserPlugin = require("terser-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const webpack = require("webpack-stream");
+const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
+
 const isProd = process.argv.includes("--production");
 
 const isDev = !isProd;
@@ -22,11 +28,19 @@ const paths = {
     partials: frontendPath + "html/partials/**/*.html",
     scss: frontendPath + "styles/style.scss",
     fonts: frontendPath + "fonts/**/*.{woff2,woff}",
+    images: frontendPath + "images/**/*.{jpeg,png,svg,jpg,webp,ico,gif}",
+    assets: frontendPath + "assets/**/*",
+    js: frontendPath + "js/**/*.js",
+
   },
   dist: {
     html: templatesPath + "core/",
     css: staticPath + "css/",
     fonts: staticPath + "fonts/",
+    images: staticPath + "images/",
+    assets: staticPath + "assets/",
+    js: staticPath + "js/",
+
   },
 };
 
@@ -69,7 +83,84 @@ const fonts = () => {
   return src(paths.frontend.fonts).pipe(dest(paths.dist.fonts));
 };
 
+/* images task */
 
+const images = () => {
+  return src(paths.frontend.images)
+    .pipe(
+      imagemin({
+        progressive: true,
+        svgoPlugins: [{ removeViewBox: false }],
+        interlaced: true,
+        optimizationLevel: 3,
+      })
+    )
+    .pipe(dest(paths.dist.images))
+};
+/* assets task */
+
+const assetsInclude = () => {
+  return src(paths.frontend.assets).pipe(dest(paths.dist.assets));
+};
+/* scripts task */
+const scripts = () => {
+  return src(paths.frontend.js)
+    .pipe(
+      webpack({
+        mode: isProd ? "production" : "development",
+        output: {
+          filename: "main.js",
+        },
+        module: {
+          rules: [
+            {
+              test: /\.js$/,
+              exclude: /node_modules/,
+              use: {
+                loader: "babel-loader",
+                options: {
+                  presets: ["@babel/preset-env"],
+                },
+              },
+            },
+            {
+              test: /\.css$/,
+              use: [{ loader: MiniCssExtractPlugin.loader }, "css-loader"],
+            },
+          ],
+        },
+        optimization: {
+          minimize: true,
+          minimizer: [
+            new TerserPlugin({
+              terserOptions: {
+                format: {
+                  comments: false,
+                },
+              },
+              extractComments: false,
+            }),
+            new CssMinimizerPlugin({
+              minimizerOptions: {
+                preset: [
+                  "default",
+                  {
+                    discardComments: { removeAll: true },
+                  },
+                ],
+              },
+            }),
+          ],
+        },
+        plugins: [
+          new MiniCssExtractPlugin({
+            filename: "../css/libs.css",
+          }),
+        ],
+      })
+    )
+    .pipe(dest(paths.dist.js))
+};
 const cleanFolders = () => {
   return src(["../templates/core/*", "../static/*"], { read: false }).pipe(
     clean({ force: true })
@@ -81,21 +172,26 @@ function watching() {
   watch(frontendPath + "**/*.html", html);
   watch(paths.frontend.partials, html);
   watch(frontendPath + "fonts/**/*.{woff2,woff}", fonts);
+  watch(frontendPath + "images/**/*.{jpeg,png,svg,jpg,webp,ico,gif}", images);
+  watch(frontendPath + "js/**/*.js", scripts);
 
 }
 
 exports.html = html;
 exports.styles = styles;
+exports.images = images;
 exports.watching = watching;
 exports.cleanFolders = cleanFolders;
 exports.fonts = fonts;
+exports.scripts = scripts;
+exports.assetsInclude = assetsInclude;
 const build = series(
   cleanFolders,
-  parallel(fonts, html, styles,)
+  parallel(fonts, html,scripts, styles,images,assetsInclude)
 );
 const dev = series(
   cleanFolders,
-  parallel(fonts, html, styles, watching)
+  parallel(fonts, html, styles,scripts, watching,images,assetsInclude)
 );
 
 exports.default = isProd ? build : dev;
