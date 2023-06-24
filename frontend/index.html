@@ -15,6 +15,7 @@
 <body>
   @@include('./html/partials/_header.html')
   <main class="main">
+ develop
     <div class="first-screen-bg col-4"></div>
     <div class="container">
       <section class="hero row">
@@ -41,6 +42,48 @@
                   </p>
                 </div>
                 <i class="fa-solid fa-circle-question"></i>
+
+    <section ion class="hero">
+      <div class="container">   
+        <div class="row">
+          <h1 class="hero__title title title_line col-12 mb-4">КиберБух</h1>
+        </div>
+        <form action="{% url 'save_video' %}" method="post" class="hero__form row">
+          {% csrf_token %}
+          <h2 class="col-12 hero__subtitle subtitle">Настройка генерации</h2>
+          <!--youtube-link box -->
+            <div class="col-12 mx-auto mb-2">
+              <input class="input-base hero__form-input" name="youtube-link" placeholder="Вставьте ссылку на youtube видео..."
+                type="text" />
+            </div>
+          <!--timebox -->
+          <div class="hero__form-box d-flex mb-2">
+            <div class="col-6">
+              <input class="input-base hero__form-input" name="start_time" placeholder="начало..." type="text" />
+            </div>
+            <div class="col-6">
+              <input class="input-base hero__form-input" name="end_time" placeholder="конец..." type="text" />
+            </div>
+          </div>
+          <!--annotation-box -->
+          <div class="hero__form-box mb-2">
+            <div class="col-12">
+              <input type="text" class="input-base hero__form-input" placeholder="длина аннотации...">
+            </div>
+          </div>
+          <!--article length-box -->
+          <div class="hero__form-box mb-2">
+            <div class="col-12">
+              <input type="text" class="input-base hero__form-input" placeholder="длина статьи...">
+            </div>
+          </div>
+             <!--screenshot-box -->
+             <div class="hero__form-box mb-2">
+              <div class="col-12">
+                <input type="text" class="input-base hero__form-input"
+                name="focus_time"
+                  placeholder="делать скриншот если кадр не менялся в течение X секунд...">
+
               </div>
             </h3>
             <!--timebox -->
