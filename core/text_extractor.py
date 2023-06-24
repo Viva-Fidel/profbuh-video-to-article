@@ -35,10 +35,7 @@ class TextProcessor:
         # Iterate over each object in the 'result' array
         for obj in data['result']:
             start = obj['start']
-            # print(paragraphs)
-            if start < 5:
-                pass
-            elif start < paragraph_times[i]:
+            if start < paragraph_times[i]:
                 paragraphs[i].append(obj['word'])
                 
             elif i == len(paragraph_times)-1:

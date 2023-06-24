@@ -8,6 +8,10 @@ from pytube import YouTube
 from celery import chain
 from moviepy.editor import VideoFileClip
 
+# Добавить детектор красных квадратов
+# Более логичная разбивка на время
+# Составление промтов для чат гпт
+
 # Create your views here.
 def index(request):
 
