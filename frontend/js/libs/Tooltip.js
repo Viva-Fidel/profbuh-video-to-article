@@ -5,7 +5,7 @@ const heroQuestion = document.querySelectorAll('.hero-form__question');
 const heroQuestionTooltipBox = document.querySelectorAll('.hero-form__tooltip-box');
 
 for(let i=0; i <heroQuestion.length;i++){
-    console.log(heroQuestion);
+    // console.log(heroQuestion);
 tippy(heroQuestion[i], {
     content: heroQuestionTooltipBox[i].innerHTML,
     allowHTML: true,

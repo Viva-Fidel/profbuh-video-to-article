@@ -23,7 +23,7 @@
 /* hero section */
 .hero {
   padding-top: var(--header-footer-height);
-  height: 100vh;
+  min-height: 100vh;
 }
 
 
@@ -33,6 +33,7 @@
   min-height: 300px;
   border-radius: 15px;
   box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.2);
+  margin: 40px 0px;
 }
 
 .hero-form__title,
@@ -43,7 +44,10 @@
 .hero-form__label {
   display: flex;
   flex-direction: column;
-  margin: 10px;
+  margin-right: 10px;
+  margin-left: 10px;
+  margin-bottom: 20px;
+  padding-top: 10px;
 }
 
 .hero-form__text {
@@ -78,6 +82,7 @@
 
 .checkbox_fake {
   display: block;
+  float: left;
   width: 20px;
   border-radius: 5px;
   height: 20px;
@@ -104,9 +109,9 @@
 
 
 .checkbox-label {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: inline-block;
+  margin: 0 auto;
+  margin-bottom: 15px;
 }
 
 .checkbox__text {
@@ -121,4 +126,13 @@
 }
 .hero-form__label{
   position: relative;
+}
+
+.hero-form__wrap{
+  display: flex;
+  flex-direction: column;
+}
+
+.hero-form__subtitle{
+  margin-bottom: 15px;
 }

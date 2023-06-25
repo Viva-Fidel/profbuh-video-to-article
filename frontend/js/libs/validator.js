@@ -1,206 +1,242 @@
 const form = document.querySelector('.hero-form');
-const urlInput = document.querySelector('.hero-form__input_link');
-const startInput = document.querySelector('.hero-form__input_start');
-const endInput = document.querySelector('.hero-form__input_end');
-const inputs = document.querySelectorAll('.hero-form__input');
+const inputs = form.querySelectorAll('.hero-form__input');
 const checkboxTime = document.querySelector('.checkbox_time');
-const inputFields = document.querySelectorAll('.hero-form__input[data-type="numberTime"]');
-const checkboxAnnotationLength = document.querySelector('.checkbox_annotation');
+const checkboxAnnotation = document.querySelector('.checkbox_annotation');
 const checkboxArticleLength = document.querySelector('.checkbox_article');
-const inputScreen = document.querySelector('.hero-form__input_screen');
+// patterns
+const patterns = {
+    youtube: /^(https?:\/\/(?:www\.)?(?:youtube\.com\/watch\?|youtube\.com\/live|youtu\.be\/))/,
+    numberTime: function (value) {
+        return value.replace(/(\d{2})(?=\d)/g, '$1.')
+    },
+    number: function (value) {
+        return value.replace(/\D/g, '');
+    },
+    screen: function (value) {
+        return value.replace(/\D/g, '');
+    }
+}
+
+console.log(`     / \\__
+    (    @\\___
+    /         O
+   /   (_____/
+  /_____/   U
+
+
+  <Bublik the pug/>
+  `
+
+
+  );
+
+
 
 document.addEventListener('DOMContentLoaded', () => {
-    const patterns = {
-        youtube: /^(https?:\/\/(?:www\.)?(?:youtube\.com\/watch\?|youtube\.com\/live|youtu\.be\/))/,
-        numberTime: function (value) {
-         return value.replace(/(\d{2})(?=\d)/g, '$1.')
-        },
-        number: function (value) {
-            return value.replace(/\D/g, '');
-        },
-        numberScreen: function (value) {
-            return value.replace(/\D/g, '');
-        }
-    }
-
-
-
-
-
-    inputs.forEach(input => {
-        input.addEventListener('input', function () {
-            let pattern = patterns[input.dataset.type];
-            if (input.dataset.type == 'youtube') {
-                if (pattern.test(input.value.trim())) {
-                    if (this.classList.contains('input-base_error')) {
-                        this.classList.remove('input-base_error')
-                        this.classList.add('input-base_approve')
-                    } else {
-                        this.classList.add('input-base_approve')
-                    }
-                } else {
-                    if (this.classList.contains('input-base_approve')) {
-                        this.classList.remove('input-base_approve')
-                        this.classList.add('input-base_error')
-                    } else {
-                        this.classList.add('input-base_error')
-                    }
-                }
+    inputs.forEach((inp) => {
+        inp.addEventListener('input', () => {
+            if (inp.dataset.type === 'youtube') {
+                checkUrlInput(inp)
+            } else if (inp.dataset.type == 'numberTime') {
+                checkTimesInput(inp)
+                debugger
+            } else if (inp.dataset.type == 'number') {
+                checkNumberInput(inp);
+            } else if (inp.dataset.type == 'screen') {
+                checkScreenInput(inp);
             }
-            if (input.dataset.type == 'numberTime') {
-                let formattedValue = pattern(input.value.trim().slice(0, 8).replace(/\D/g, ''));
-                this.value = formattedValue;
-                    if (pattern.test(input.value.trim())) {
-                        if (this.classList.contains('input-base_error')) {
-                            this.classList.remove('input-base_error')
-                            this.classList.add('input-base_approve')
-                        } else {
-                            this.classList.add('input-base_approve')
-                        }
-                    } else {
-                        if (this.classList.contains('input-base_approve')) {
-                            this.classList.remove('input-base_approve')
-                            this.classList.add('input-base_error')
-                        } else {
-                            this.classList.add('input-base_error')
-                        }
-                    }
-
-
-
-
-
-
-            }
-            if (input.dataset.type == 'number') {
-                let formattedValue = pattern(input.value.trim().slice(0, 8));
-                this.value = formattedValue;
-            }
-            if (input.dataset.type == 'numberScreen') {
-                let formattedValue = pattern(input.value.trim().slice(0, 2));
-                this.value = formattedValue;
-            }
-
         })
-        checkboxTime.addEventListener('change', function () {
-            const isChecked = this.checked;
-            inputFields.forEach(input => {
-                input.value = ''; // Сброс значения
-                if (isChecked) {
-                    input.setAttribute('disabled', ''); // Добавление атрибута disabled
-                    input.classList.add('input-base_disabled'); // Добавление класса "disabled"
-                } else {
-                    input.removeAttribute('disabled'); // Удаление атрибута disabled
-                    input.classList.remove('input-base_disabled'); // Добавление класса "disabled"
-                }
-            });
-        });
-        if (checkboxTime.checked) {
-            inputFields.forEach(input => {
-                input.value = ''; // Сброс значения
-                input.setAttribute('disabled', '');
-                input.classList.add('input-base_disabled');
-            });
-        }
-
-        checkboxAnnotationLength.addEventListener('change', function () {
-            const isChecked = this.checked;
-            let inputAnnotation = document.querySelector('.hero-form__input_annotation');
-            inputAnnotation.value = ''
-            if (isChecked) {
-                inputAnnotation.setAttribute('disabled', ''); // Добавление атрибута disabled
-                inputAnnotation.classList.add('input-base_disabled'); // Добавление класса "disabled"
-            } else {
-                inputAnnotation.removeAttribute('disabled'); // Удаление атрибута disabled
-                inputAnnotation.classList.remove('input-base_disabled'); // Добавление класса "disabled"
-            }
-
-        });
-
-
-        checkboxArticleLength.addEventListener('change', function () {
-            const isChecked = this.checked;
-            let inputArticle = document.querySelector('.hero-form__input_article');
-            inputArticle.value = ''
-            if (isChecked) {
-                inputArticle.setAttribute('disabled', ''); // Добавление атрибута disabled
-                inputArticle.classList.add('input-base_disabled'); // Добавление класса "disabled"
-            } else {
-                inputArticle.removeAttribute('disabled'); // Удаление атрибута disabled
-                inputArticle.classList.remove('input-base_disabled'); // Добавление класса "disabled"
-            }
-        });
-
-
     })
-})
 
 
-
-form.addEventListener('submit', function (e) {
-    e.preventDefault();
-    let formData = checkForm();
-    let it = 0;
-
-    for(item in formData){
-       if(formData[item] === false || formData[item] === ''){
-        it++;
-       }
-    }
-    if(it > 0){
-        console.log('Данные не отправлены')
-
-    }else{
-        console.log('Форма отправлена')
-    }
-
-})
-
-
-function checkForm() {
-    const checkFormData = {
-        url: '',
-        time: '',
-        article: '',
-        annotation: '',
-        screenSec: '',
-    }
-    let checkTime = 0;
-
-    if (urlInput.classList.contains('input-base_approve')) {
-        checkFormData.url = urlInput.value.trim();
-    }
-    inputFields.forEach((inp) => {
-        if (inp.classList.contains('input-base_disabled')) {
-            ++checkTime;
-        } else {
-            inp.value.trim();
-        }
-    })
-    if (checkboxTime.checked && checkTime === 2) {
-        checkFormData.time = true
-    } else if ((!checkboxTime.checked && inputFields[0].value.trim() !== '') && (!checkboxTime.checked && inputFields[1].value.trim() !== '')) {
-        checkFormData.time = [inputFields[0].value.trim(), inputFields[1].value.trim()]
+    if (checkboxTime.checked) {
+        setDisabled(document.querySelector('.hero-form__input_start'), document.querySelector('.hero-form__input_end'))
+        clearValue(document.querySelector('.hero-form__input_start'), document.querySelector('.hero-form__input_end'))
     } else {
-        checkFormData.time = false;
+        removeDisabled(document.querySelector('.hero-form__input_start'), document.querySelector('.hero-form__input_end'))
     }
 
-    let inputAnnotation = document.querySelector('.hero-form__input_annotation');
-    const checkboxAnnotationLength = document.querySelector('.checkbox_annotation');
-    if (checkboxAnnotationLength.checked) {
-        checkFormData.annotation = true;
-    } else  {
-        inputAnnotation.value.trim() !== '' ? (checkFormData.annotation = inputAnnotation.value.trim()) : checkFormData.annotation =  false
+    if (checkboxAnnotation.checked) {
+        setDisabled(document.querySelector('.hero-form__input_annotation'))
+        clearValue(document.querySelector('.hero-form__input_annotation'))
+    } else {
+        removeDisabled(document.querySelector('.hero-form__input_annotation'))
     }
-
-    let inputArticle = document.querySelector('.hero-form__input_article');
     if (checkboxArticleLength.checked) {
-        checkFormData.article = true;
+        setDisabled(document.querySelector('.hero-form__input_article'))
+        clearValue(document.querySelector('.hero-form__input_article'))
     } else {
-        inputArticle.value.trim() !== '' ? checkFormData.article = inputArticle.value.trim() : checkFormData.article = false;
+        removeDisabled(document.querySelector('.hero-form__input_article'))
     }
-    inputScreen.value.trim() !== '' ? checkFormData.screenSec = inputScreen.value.trim() : checkFormData.screenSec = false ;
 
-    return checkFormData;
 
-}
+    form.addEventListener('submit', (e) => {
+        e.preventDefault()
+    })
+
+
+    function checkUrlInput(input) {
+        const classes = {
+            approve: 'input-base_approve',
+            error: 'input-base_error',
+        }
+        let purgEvalue = input.value.trim();
+        let pattern = patterns[input.dataset.type];
+        let resultTest = pattern.test(purgEvalue)
+        if (resultTest) {
+            if (input.classList.contains(classes.error)) {
+                input.classList.remove(classes.error);
+                input.classList.add(classes.approve);
+                removeMessage(input.dataset.type)
+            } else{
+                input.classList.add(classes.approve);
+                removeMessage(input.dataset.type)
+            }
+        } else if (!resultTest) {
+            input.classList.add(classes.error);
+            input.classList.contains(classes.approve) ? input.classList.remove(classes.approve) : '';
+            setMessage(input.dataset.type)
+
+        }
+
+    }
+
+
+
+
+    function checkTimesInput(input) {
+        if (input.type === 'checkbox') {
+            if (input.checked) {
+                setDisabled(document.querySelector('.hero-form__input_start'), document.querySelector('.hero-form__input_end'))
+                clearValue(document.querySelector('.hero-form__input_start'), document.querySelector('.hero-form__input_end'))
+                removeMessage(document.querySelector('.hero-form__input_start').dataset.type, document.querySelector('.hero-form__input_start'))
+                removeMessage(document.querySelector('.hero-form__input_end').dataset.type, document.querySelector('.hero-form__input_end'))
+            } else {
+                removeDisabled(document.querySelector('.hero-form__input_start'), document.querySelector('.hero-form__input_end'))
+            }
+        }
+        const classes = {
+            approve: 'input-base_approve',
+            error: 'input-base_error',
+        }
+        let purgEvalue = input.value.trim();
+        if (/[a-zA-Z]/.test(purgEvalue)) {
+            purgEvalue = purgEvalue.replace(/[a-zA-Z]/g, '');
+            input.value = purgEvalue;
+            return;
+        }
+        let pattern = patterns[input.dataset.type];
+        let formattedValue = pattern(purgEvalue.trim().slice(0, 8).replace(/\D/g, ''));
+        input.value = formattedValue;
+        if (input.value.length == 8 || input.value.length == 0) {
+            removeMessage(input.dataset.type, input)
+        } else if (input.value.length < 8) {
+            setMessage(input.dataset.type, input)
+        }
+    }
+
+    function checkScreenInput(input) {
+        let purgEvalue = input.value.trim();
+        if (/[a-zA-Z]/.test(purgEvalue)) {
+            // Удаление букв из значения
+            purgEvalue = purgEvalue.replace(/[a-zA-Z]/g, '');
+            input.value = purgEvalue;
+            return;
+        }
+        let pattern = patterns[input.dataset.type];
+        let formattedValue = pattern(input.value.trim().slice(0, 2));
+        this.value = formattedValue;
+    }
+
+    function checkNumberInput(input) {
+        if (input.type === 'checkbox') {
+            if (input.classList.contains('checkbox_annotation')) {
+                if (input.checked) {
+                    setDisabled(document.querySelector('.hero-form__input_annotation'));
+                    clearValue(document.querySelector('.hero-form__input_annotation'))
+                    removeMessage(document.querySelector('.hero-form__input_annotation').dataset.type, document.querySelector('.hero-form__input_annotation'))
+                } else {
+                    removeDisabled(document.querySelector('.hero-form__input_annotation'))
+                }
+            }
+            if (input.classList.contains('checkbox_article')) {
+                if (input.checked) {
+                    setDisabled(document.querySelector('.hero-form__input_article'));
+                    clearValue(document.querySelector('.hero-form__input_article'))
+                    removeMessage(document.querySelector('.hero-form__input_article').dataset.type, document.querySelector('.hero-form__input_article'))
+
+                }else{
+                    removeDisabled(document.querySelector('.hero-form__input_article'))
+
+                }
+            }
+        }
+
+
+        let pattern = patterns[input.dataset.type];
+        let formattedValue = pattern(input.value.trim().slice(0, 8));
+        input.value = formattedValue;
+    }
+
+    function setMessage(inputType, inp) {
+        const errorItemYouTube = document.querySelector('.error-text_youtube');
+        const errorItemnumberTimeStart = document.querySelector('.error-text_numberTime_start');
+        const errorItemnumberTimeEnd = document.querySelector('.error-text_numberTime_end');
+
+        const messageBook = {
+            youtube: 'пожалуйста,введите корректную ссылку',
+            numberTime: 'пожалуйста,придерживайтесь формата [чч.мм.сс]',
+        }
+        if (inputType === 'youtube') {
+            errorItemYouTube.classList.add('error-text_active')
+            errorItemYouTube.textContent = messageBook[inputType];
+        } else if (inputType === 'numberTime') {
+            if (inp.classList.contains('hero-form__input_start')) {
+                errorItemnumberTimeStart.classList.add('error-text_active')
+                errorItemnumberTimeStart.textContent = messageBook[inputType];
+            } else if (inp.classList.contains('hero-form__input_end')) {
+                errorItemnumberTimeEnd.classList.add('error-text_active')
+                errorItemnumberTimeEnd.textContent = messageBook[inputType];
+            }
+
+        }
+    }
+
+    function removeMessage(inputType, inp) {
+        const errorItemYouTube = document.querySelector('.error-text_youtube');
+        const errorItemnumberTimeStart = document.querySelector('.error-text_numberTime_start');
+        const errorItemnumberTimeEnd = document.querySelector('.error-text_numberTime_end');
+        if (inputType === 'youtube') {
+            errorItemYouTube.classList.remove('error-text_active')
+            errorItemYouTube.textContent = '';
+        } else if (inputType === 'numberTime') {
+            if (inp.classList.contains('hero-form__input_start')) {
+                errorItemnumberTimeStart.classList.remove('error-text_active')
+                errorItemnumberTimeStart.textContent = '';
+            } else if (inp.classList.contains('hero-form__input_end')) {
+                errorItemnumberTimeEnd.classList.remove('error-text_active')
+                errorItemnumberTimeEnd.textContent = '';
+            }
+        }
+    }
+
+    function setDisabled(...inputs) {
+        inputs.forEach(inp => {
+            inp.classList.add('input-base_disabled');
+            inp.setAttribute('disabled', '');
+        })
+    }
+
+    function removeDisabled(...inputs) {
+        inputs.forEach(inp => {
+            inp.classList.remove('input-base_disabled');
+            inp.removeAttribute('disabled');
+        })
+    }
+
+    function clearValue(...inputs) {
+        inputs.forEach(inp => {
+            inp.value = '';
+        })
+    }
+})

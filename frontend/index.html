@@ -5,11 +5,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Кибербух</title>
+  <title>КиберБух</title>
   <link rel="stylesheet" href="{% static 'css/libs.css' %}" />
   <link rel="stylesheet" href="{% static 'css/style.min.css' %}" />
   <link rel="stylesheet" href="{% static 'assets/css/fontawesome.min.css' %}" />
   <link rel="stylesheet" href="{% static 'assets/css/solid.css' %}" />
+  <link rel="icon" href="{% static 'assets/favicon.ico' %}" type="image/x-icon">
+
 </head>
 
 <body>
@@ -18,7 +20,8 @@
     <div class="first-screen-bg col-4"></div>
     <div class="container">
       <section class="hero row">
-        <div class="offset-2 col-10">
+        <div class="col-12 mx-auto">
+          <h1 class="title title_line mb-4 ">КиберБух</h1>
           <form  action="#" class="hero-form">
             <h2 class="hero-form__title subtitle mb-4">Настройка генерации</h2>
             <!--youtube-link box -->
@@ -34,18 +37,21 @@
                     type="text" />
                   <i class="hero-form__input-icon hero-form__input-icon_link fa-solid fa-link"></i>
                 </div>
+                <p class="error-text_youtube error-text"></p>
               </label>
             </div>
-            <div class="hero-form__question-box">
-              <h3 class="hero-form__subtitle">Диапазон из видео для генерации статьи</h3>
-              <div class="hero-form__question">
-                <div class="hero-form__tooltip-box">
-                  <p class="tooltip-text">
-                    Вы можете указать диапазон видео,на основании которого будет формироваться статья.
-                  </p>
+           <div class="hero-form__question-box">
+              <h3 class="hero-form__subtitle">Диапазон из видео для генерации статьи
+                <div class="hero-form__question">
+                  <div class="hero-form__tooltip-box">
+                    <p class="tooltip-text">
+                      Вы можете указать диапазон видео,на основании которого будет формироваться статья.
+                    </p>
+                  </div>
+                  <i class="fa-solid fa-circle-question"></i>
                 </div>
-                <i class="fa-solid fa-circle-question"></i>
-              </div>
+
+              </h3>
             </div>
 
             <!--timebox -->
@@ -53,20 +59,23 @@
               <!-- start -->
               <label class="hero-form__label">
                 <span class="hero-form__text mb-3">Укажите начало видео...</span>
-                <input disabled data-type="numberTime" maxlength="8"
-                  class="input-base hero-form__input hero-form__input_start input-base_disabled"
+                <input data-type="numberTime" maxlength="8"
+                  class="input-base hero-form__input hero-form__input_start"
                   placeholder="В формате: [чч:мин:сек]" type="text" />
-              </label>
+                  <p class="error-text_numberTime_start error-text"></p>
+                </label>
 
               <!-- end -->
               <label class="hero-form__label">
                 <span class="hero-form__text mb-3">Укажите конец видео...</span>
-                <input disabled data-type="numberTime" maxlength="8" class="input-base_disabled hero-form__input_end input-base hero-form__input"
+                <input  data-type="numberTime" maxlength="8" class="hero-form__input_end input-base hero-form__input"
                  placeholder="В формате: [чч:мин:сек]" type="text" />
+                 <p class="error-text_numberTime_end error-text"></p>
+
               </label>
 
                <label class="checkbox-label">
-                <input type="checkbox" checked class="checkbox checkbox_time">
+                <input data-type="numberTime" type="checkbox" checked class="checkbox checkbox_time hero-form__input">
                 <span class="checkbox_fake"></span>
                 <span class="checkbox__text">Без ограничений</span>
               </label>
@@ -75,23 +84,23 @@
 
             <!--annotation-box -->
             <div class="hero-form__wrap">
-              <label class="hero-form__label">
-                <h3 class="hero-form__subtitle">Укажите длину аннотации
-                  <div class="hero-form__question">
-                    <div class="hero-form__tooltip-box">
-                      <p class="tooltip-text">
-                        Аннотация - вступление к статье,обычно на 2-3 предложения
-                      </p>
-                    </div>
-                    <i class="fa-solid fa-circle-question"></i>
+              <h3 class="hero-form__subtitle">Укажите длину аннотации
+                <div class="hero-form__question">
+                  <div class="hero-form__tooltip-box">
+                    <p class="tooltip-text">
+                      Аннотация - вступление к статье,обычно на 2-3 предложения
+                    </p>
                   </div>
-                </h3>
-                <input disabled data-type="number" class="input-base_disabled hero-form__input hero-form__input_annotation input-base"
+                  <i class="fa-solid fa-circle-question"></i>
+                </div>
+              </h3>
+              <label class="hero-form__label">
+                <input data-type="number" class="input-base_disabled hero-form__input hero-form__input_annotation input-base"
                  placeholder="Например: 100 (создаст аннотацию объемом в 100 символов)" type="text" />
               </label>
 
              <label class="checkbox-label">
-                <input checked type="checkbox" class="checkbox checkbox_annotation">
+                <input data-type="number" checked type="checkbox" class="checkbox checkbox_annotation hero-form__input">
                 <span class="checkbox_fake"></span>
                 <span class="checkbox__text">Без ограничений</span>
               </label>
@@ -100,16 +109,18 @@
           <div class="hero-form__wrap">
               <label class="hero-form__label">
                 <h3 class="hero-form__subtitle mb-3">Укажите длину статьи</h3>
-                <input disabled data-type="number" class="input-base_disabled hero-form__input hero-form__input_article input-base"
+                <input data-type="number" class="hero-form__input hero-form__input_article input-base"
                   placeholder="Например: 1000 (создаст статью объемом в 1000 символов)" type="text" />
               </label>
               <label class="checkbox-label">
-                <input checked type="checkbox" class="checkbox checkbox_article">
+                <input data-type="number" checked type="checkbox" class="checkbox checkbox_article hero-form__input">
                 <span class="checkbox_fake"></span>
                 <span class="checkbox__text">Без ограничений</span>
               </label>
             </div>
             <!--screenshot-box -->
+
+
 
             <label class="hero-form__label">
               <h3 class="hero-form__subtitle">Делать скриншот для статьи,если кадр не менялся...
@@ -121,7 +132,7 @@
                   <i class="fa-solid fa-circle-question"></i>
                 </div>
               </h3>
-              <input data-type="numberScreen" class="hero-form__input hero-form__input_screen input-base"
+              <input maxlength="2" data-type="screen" class="hero-form__input hero-form__input_screen input-base"
                 placeholder="Например: 5" type="text" />
             </label>
 
@@ -136,6 +147,8 @@
     </div>
     </section>
   </main>
+  @@include('./html/partials/_footer.html')
+
   <script src="{% static 'js/main.js' %}"></script>
 </body>
 
