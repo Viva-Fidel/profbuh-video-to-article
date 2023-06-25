@@ -28,7 +28,7 @@
 
 
 .hero-form {
-  background: var(--white-color);
+  background: var( --white-primary);
   padding: 20px;
   min-height: 300px;
   border-radius: 15px;
@@ -38,7 +38,6 @@
 .hero-form__title,
 .hero-form__subtitle {
   text-align: center;
-  margin-bottom: 20px;
 }
 
 .hero-form__label {
@@ -112,4 +111,14 @@
 
 .checkbox__text {
   margin-left: 10px;
+}
+
+.hero-form__question-box{
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+.hero-form__label{
+  position: relative;
 }

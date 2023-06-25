@@ -12,6 +12,7 @@ const TerserPlugin = require("terser-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const webpack = require("webpack-stream");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
+// const babel = require("gulp-babel");
 
 const isProd = process.argv.includes("--production");
 
@@ -103,11 +104,24 @@ const assetsInclude = () => {
   return src(paths.frontend.assets).pipe(dest(paths.dist.assets));
 };
 /* scripts task */
+
+// const scripts = () => {
+//   return src(paths.frontend.js)
+//     .pipe(
+//       babel({
+//         presets: ["@babel/preset-env"],
+//       })
+//     )
+//     .pipe(dest(paths.dist.js));
+// };
+
+
 const scripts = () => {
   return src(paths.frontend.js)
     .pipe(
       webpack({
         mode: isProd ? "production" : "development",
+        entry: '../frontend/js/main.js',
         output: {
           filename: "main.js",
         },

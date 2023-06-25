@@ -145,5 +145,29 @@
     box-shadow: inset 1px 2px 4px rgba(0, 0, 0, 0.01),
       0px 0px 8px rgba(0, 0, 0, 0.2);
   }
+  &_error{
+    border: 1px solid var(--attention-color);
+    & + i{
+      color: var(--attention-color);
+    }
+  }
+  &_approve{
+    border: 1px solid var(--approve-color);
+    & + i{
+      color: var(--approve-color);
+    }
+  }
+}
 
+.input-base_disabled{
+  background: var(--disabled-color);
+  pointer-events: none;
+  box-shadow:none;
+}
+
+.error-text{
+  position: absolute;
+  color: var(--attention-color);
+  left: 0;
+  bottom: -20px;
 }
