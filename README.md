@@ -30,8 +30,19 @@
        ```
        python manage.py runserver
        ```
-
-4. Для запуска Celery выполните следующую команду:
+4. Установите зависимости:
+   - Создайте папку media со следующими подпапками:
+```
+       screenshots
+       ```
+```
+       videos
+       ```
+```
+       audio
+       ```
+   
+6. Для запуска Celery выполните следующую команду:
    ```
    celery -A profbuh_video_to_article worker -l info
    ```
