@@ -70,9 +70,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 
-    form.addEventListener('submit', (e) => {
-        e.preventDefault()
-    })
+    // form.addEventListener('submit', (e) => {
+    //     e.preventDefault()
+    // })
 
 
     function checkUrlInput(input) {

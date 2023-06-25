@@ -63,7 +63,8 @@ class TextProcessor:
         for lists in data:
             input_text = ' '.join(lists)
             processed_text = self.apply_te(input_text, model, lan='ru')
-            paragraph = Paragraphs(article=processed_text)
+            len_article = len(processed_text)
+            paragraph = Paragraphs(article=processed_text, len_article=len_article)
             paragraph.save()
             paragraph.video.add(current_video)  # Associate the text with the video
 

@@ -1,4 +1,5 @@
 from django.db import models
+
 import uuid
 
 # Create your models here.
@@ -43,6 +44,8 @@ class Screenshots(models.Model):
     screenshot_id = models.CharField(max_length=36, editable=False)
     screenshot = models.ImageField(upload_to=screenshot_upload_to)
     timestamp = models.PositiveIntegerField(default=0)
+    group = models.PositiveIntegerField(default=0)
+    red_square = models.BooleanField(default=False)
 
     def __str__(self):
         return self.screenshot.name
@@ -51,6 +54,7 @@ class Screenshots(models.Model):
 class Paragraphs(models.Model):
     video = models.ManyToManyField(Videos)
     article = models.TextField()
+    len_article = models.PositiveIntegerField(default=0)
 
     def __str__(self):
         return f"Paragraphs for {', '.join(str(video) for video in self.video.all())}"

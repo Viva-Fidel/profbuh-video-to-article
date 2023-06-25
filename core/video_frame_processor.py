@@ -10,11 +10,12 @@ class VideoFrameProcessor:
         self.video_id = video_id
         self.video_path = video_path
         self.threshold = 50
-        self.start_time = 5
+        self.start_time = 0
         self.prev_frame = None
         self.counter = 1 
         self.screen_time = 0
         self.show_time = focus_time
+        self.time_counter = 0
 
 
     def calculate_mse(self, frame1, frame2):
@@ -23,47 +24,36 @@ class VideoFrameProcessor:
         return error
 
     def detect_and_capture(self, frame, timestamp):
+        time_difference = timestamp - self.screen_time
+        if time_difference >= 1:
+            self.screen_time = timestamp
+            # Generate the file name using the time offset (Convert to milliseconds)
+            filename = f"screenshot_{timestamp}.jpg"
 
-        if self.prev_frame is not None:
-            # Convert frame to grayscale
-            new_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-            mse = self.calculate_mse(self.prev_frame, new_frame)
-            self.prev_frame = new_frame
-  
-            # Check if the MSE is above the threshold
-            if mse > self.threshold:
-                if timestamp - self.show_time >= self.screen_time:
-                    self.screen_time = timestamp
-                    
-                    # Generate the file name using the time offset # Convert to milliseconds
-                    filename = f"screenshot_{timestamp-self.show_time}.jpg"
-
-                    # Save a screenshot of the current frame
-                    image = Image.fromarray(frame)
-                    image_buffer = io.BytesIO()
-                    image.save(image_buffer, format='JPEG')
-                    image_file = InMemoryUploadedFile(
-                           image_buffer,
-                           None,
-                           filename,
-                           'image/jpeg',
-                           image_buffer.tell(),
-                           None
-                        )
-    
-                    # Save a screenshot of the current frame
-                    screenshot = Screenshots.objects.create(screenshot_id=self.video_id, timestamp=timestamp-5)
-                    screenshot.screenshot.save(filename, image_file)
-                        
-                    current_video = Videos.objects.get(id=self.video_id)
-                    screenshot.video.add(current_video)  # Associate the screenshot with the video
-                    screenshot.save()
-                else:
-                    self.screen_time = timestamp
+            # Save a screenshot of the current frame
+            save_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+            image = Image.fromarray(save_frame)
+            image_buffer = io.BytesIO()
+            image.save(image_buffer, format='JPEG')
+            image_file = InMemoryUploadedFile(
+                image_buffer,
+                None,
+                filename,
+                'image/jpeg',
+                image_buffer.tell(),
+                None)
+            
+            # Save a screenshot of the current frame
+            screenshot = Screenshots.objects.create(screenshot_id=self.video_id, timestamp=timestamp)
+            screenshot.screenshot.save(filename, image_file)
+                
+            current_video = Videos.objects.get(id=self.video_id)
+            screenshot.video.add(current_video)  # Associate the screenshot with the video
+            screenshot.save()   
+     
 
 
     def process_video(self):
-      
         video_capture = cv2.VideoCapture(self.video_path)
 
         while True:

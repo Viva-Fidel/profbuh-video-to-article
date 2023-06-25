@@ -17,13 +17,13 @@
 <body>
   @@include('./html/partials/_header.html')
   <main class="main">
- develop
     <div class="first-screen-bg col-4"></div>
     <div class="container">
       <section class="hero row">
         <div class="col-12 mx-auto">
           <h1 class="title title_line mb-4 ">КиберБух</h1>
-          <form  action="#" class="hero-form">
+          <form action="{% url 'save_video' %}" method="post" class="hero-form">
+            {% csrf_token %}
             <h2 class="hero-form__title subtitle mb-4">Настройка генерации</h2>
             <!--youtube-link box -->
              <div class="hero-form__box mb-4">
@@ -35,8 +35,8 @@
                     data-status=""
                     class="hero-form__input hero-form__input_link input-base"
                     placeholder="Например: https://www.youtube.com/watch?v=dskVjk9VmEU&ab_channel=PROFBuh"
-                    type="text" />
-                  <i class="hero-form__input-icon hero-form__input-icon_link fa-solid fa-link"></i>
+                    type="text" 
+                    name="youtube-link"/>
                 </div>
                 <p class="error-text_youtube error-text"></p>
               </label>
@@ -62,6 +62,7 @@
                 <span class="hero-form__text mb-3">Укажите начало видео...</span>
                 <input data-type="numberTime" maxlength="8"
                   class="input-base hero-form__input hero-form__input_start"
+                  name="start_time"
                   placeholder="В формате: [чч:мин:сек]" type="text" />
                   <p class="error-text_numberTime_start error-text"></p>
                 </label>
@@ -69,14 +70,14 @@
               <!-- end -->
               <label class="hero-form__label">
                 <span class="hero-form__text mb-3">Укажите конец видео...</span>
-                <input  data-type="numberTime" maxlength="8" class="hero-form__input_end input-base hero-form__input"
+                <input  data-type="numberTime" maxlength="8" name="end_time" class="hero-form__input_end input-base hero-form__input"
                  placeholder="В формате: [чч:мин:сек]" type="text" />
                  <p class="error-text_numberTime_end error-text"></p>
 
               </label>
 
                <label class="checkbox-label">
-                <input data-type="numberTime" type="checkbox" checked class="checkbox checkbox_time hero-form__input">
+                <input data-type="numberTime" type="checkbox" checked class="checkbox checkbox_time hero-form__input" name="time_no_limit">
                 <span class="checkbox_fake"></span>
                 <span class="checkbox__text">Без ограничений</span>
               </label>
@@ -97,11 +98,11 @@
               </h3>
               <label class="hero-form__label">
                 <input data-type="number" class="input-base_disabled hero-form__input hero-form__input_annotation input-base"
-                 placeholder="Например: 100 (создаст аннотацию объемом в 100 символов)" type="text" />
+                 placeholder="Например: 100 (создаст аннотацию объемом в 100 символов)" name="annotation_length" type="text" />
               </label>
 
              <label class="checkbox-label">
-                <input data-type="number" checked type="checkbox" class="checkbox checkbox_annotation hero-form__input">
+                <input data-type="number" name="annotation_no_limit" checked type="checkbox" class="checkbox checkbox_annotation hero-form__input">
                 <span class="checkbox_fake"></span>
                 <span class="checkbox__text">Без ограничений</span>
               </label>
@@ -110,11 +111,11 @@
           <div class="hero-form__wrap">
               <label class="hero-form__label">
                 <h3 class="hero-form__subtitle mb-3">Укажите длину статьи</h3>
-                <input data-type="number" class="hero-form__input hero-form__input_article input-base"
+                <input name="article_legth" data-type="number" class="hero-form__input hero-form__input_article input-base"
                   placeholder="Например: 1000 (создаст статью объемом в 1000 символов)" type="text" />
               </label>
               <label class="checkbox-label">
-                <input data-type="number" checked type="checkbox" class="checkbox checkbox_article hero-form__input">
+                <input data-type="number" name="article_no_limit" checked type="checkbox" class="checkbox checkbox_article hero-form__input">
                 <span class="checkbox_fake"></span>
                 <span class="checkbox__text">Без ограничений</span>
               </label>
@@ -133,7 +134,7 @@
                   <i class="fa-solid fa-circle-question"></i>
                 </div>
               </h3>
-              <input maxlength="2" data-type="screen" class="hero-form__input hero-form__input_screen input-base"
+              <input maxlength="2" data-type="screen" name="focus_time" class="hero-form__input hero-form__input_screen input-base"
                 placeholder="Например: 5" type="text" />
             </label>
 
