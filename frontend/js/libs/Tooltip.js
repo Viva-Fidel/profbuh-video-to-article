@@ -4,8 +4,8 @@ import 'tippy.js/dist/tippy.css';
 const heroQuestion = document.querySelectorAll('.hero-form__question');
 const heroQuestionTooltipBox = document.querySelectorAll('.hero-form__tooltip-box');
 
-console.log(heroQuestionTooltipBox);
 for(let i=0; i <heroQuestion.length;i++){
+    // console.log(heroQuestion);
 tippy(heroQuestion[i], {
     content: heroQuestionTooltipBox[i].innerHTML,
     allowHTML: true,
@@ -16,6 +16,5 @@ tippy(heroQuestion[i], {
     theme: 'white',
     interactive: true,
     interactiveDebounce: 75,
-
   });
 }

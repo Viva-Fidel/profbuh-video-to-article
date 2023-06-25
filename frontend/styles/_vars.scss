@@ -1,9 +1,9 @@
 :root{
-    --blue-primary:rgb(7, 133, 206);
+    --blue-primary:#0785ce;
     --blue-primary-hover:rgb(55, 170, 236);
     --blue-primary-active:rgb(4, 118, 184);
     --blue-primary-focus:rgb(7, 102, 156);
-    --white-primary:rgba(254, 254, 254,1);
+    --white-primary:#fefefe;
     --black-primary:rgba(51, 51, 51, 1);
     --accent-color:#e21a43;
     --accent-color-hover:rgb(239, 49, 87);
@@ -12,8 +12,10 @@
     --grey-color: rgb(228, 227, 227);
     --grey-color-hover:rgb(217, 217, 217);
     --grey-color-active:rgb(195, 195, 195);
+    --attention-color:rgb(214, 7, 7);
+
     --approve-color: rgba(33, 194, 33,1);
-    --disabled-color: rgb(169, 169, 169);
+    --disabled-color:rgba(229, 229, 229, 0.651);
     /* fonts */
   --font-inter: "Inter", sans-serif;
  /* transition */
