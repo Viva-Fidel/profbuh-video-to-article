@@ -1,29 +1,43 @@
-from .models import Audios, Videos
 from django.core.files.base import ContentFile
+
+from .models import Audios, Videos
 
 import moviepy.editor as mp
 import tempfile
+
 
 class AudioProcessor:
     def __init__(self, video_path, video_id):
         self.video_path = video_path
         self.video_id = video_id
-        # self.skip_time = 5
 
     def process_audio(self):
+        # Загрузить видео из файла
         video = mp.VideoFileClip(self.video_path)
-        # video = video.subclip(self.skip_time)
+
+        # Извлечь аудио из видео
         audio = video.audio
 
-       # Save the audio file in the database
+        # Сохранить аудиофайл в базе данных
         with tempfile.NamedTemporaryFile(suffix='.wav') as temp_audio:
+            # Записать аудиофайл во временный файл
             audio.write_audiofile(temp_audio.name)
 
+            # Открыть временный файл аудио для чтения в двоичном режиме
             audio_file = open(temp_audio.name, 'rb')
-            audio_name = f"output_audio.wav"  # Use the video_id as the audio file name
+            # Использовать video_id в качестве имени аудиофайла
+            audio_name = f"output_audio.wav"
 
+            # Получить экземпляр видео из базы данных
             video_instance = Videos.objects.get(id=self.video_id)
-            audio_instance = Audios(video=video_instance, audio_id=self.video_id)  # Set video instance as the foreign key
-            audio_instance.audio_file.save(audio_name, ContentFile(audio_file.read()))
-            audio_instance.save()
 
+            # Создать экземпляр аудио с указанием видео в качестве внешнего ключа
+            audio_instance = Audios(
+                video=video_instance, audio_id=self.video_id)
+
+            # Сохранить файл аудио в поле audio_file модели Audios
+            audio_instance.audio_file.save(
+                audio_name, ContentFile(audio_file.read()))
+
+            # Сохранить экземпляр аудио
+            audio_instance.save()
