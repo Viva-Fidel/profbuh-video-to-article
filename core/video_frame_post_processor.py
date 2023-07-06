@@ -5,11 +5,10 @@ import numpy as np
 
 
 class VideoPostFrameProcessor:
-    def __init__(self, video_id, focus_time):
+    def __init__(self, video_id):
         self.video_id = video_id
         self.current_screenshot_group = 1
         self.previous_screenshot = None
-        self.show_time = focus_time
         self.threshold = 30
 
     def calculate_mse(self, img1, img2):

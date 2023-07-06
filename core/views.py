@@ -90,13 +90,16 @@ def save_video(request):
 
         if annotation_no_limit == "on":
             annotation_length = "Безгранично"
+        
+        if focus_time == '':
+            focus_time = 10
 
         task_chain = chain(
             process_video_task.s(output_path, video_id),
-            process_video_screenshots.s(video_id, int(focus_time)),
+            process_video_screenshots.s(video_id),
             process_audio_task.s(output_path, video_id),
             process_text_task.s(video_id),
-            send_request_task.s(video_id, article_legth, annotation_length, focus_time),
+            send_request_task.s(video_id, article_legth, annotation_length, int(focus_time)),
         )
         task_result = task_chain.delay()
         result = task_result.get()

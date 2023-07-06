@@ -14,9 +14,9 @@ def process_video_task(video_path, video_id):
 
 
 @shared_task
-def process_video_screenshots(self, video_id, focus_time):
+def process_video_screenshots(self, video_id):
     # Создание экземпляра VideoPostFrameProcessor и создание скриншотов видео
-    frame_post_processor = VideoPostFrameProcessor(video_id, focus_time)
+    frame_post_processor = VideoPostFrameProcessor(video_id)
     frame_post_processor.process_video_screenshots()
 
 
