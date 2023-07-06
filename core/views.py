@@ -96,12 +96,11 @@ def save_video(request):
             process_video_screenshots.s(video_id, int(focus_time)),
             process_audio_task.s(output_path, video_id),
             process_text_task.s(video_id),
-            send_request_task.s(video_id, article_legth, annotation_length),
+            send_request_task.s(video_id, article_legth, annotation_length, focus_time),
         )
         task_result = task_chain.delay()
-        # print(task_result)
         result = task_result.get()
-        # print(result)
+
 
         video = Videos.objects.get(id=video_id)
         article = Articles.objects.get(video=video)

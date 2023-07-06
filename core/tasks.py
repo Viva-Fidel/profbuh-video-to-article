@@ -35,8 +35,8 @@ def process_text_task(self, video_id):
 
 
 @shared_task
-def send_request_task(self, video_id, article_legth, annotation_length):
+def send_request_task(self, video_id, article_legth, annotation_length, focus_time):
     # Создание экземпляра ArticleCreation и получение ответа от ChatGPT
     article_creation = ArticleCreation(
-        video_id, article_legth, annotation_length)
+        video_id, article_legth, annotation_length, focus_time)
     article_creation.get_response()

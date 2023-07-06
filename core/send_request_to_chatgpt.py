@@ -14,10 +14,11 @@ from docx import Document
 
 
 class ArticleCreation:
-    def __init__(self, video_id, article_legth, annotation_length):
+    def __init__(self, video_id, article_legth, annotation_length, focus_time):
         self.article_legth = article_legth
         self.annotation_length = annotation_length
         self.video_id = video_id
+        self.focus_time = focus_time
         self.article_total_length = 0
         openai.api_key = OPEN_AI_KEY
 
@@ -69,7 +70,7 @@ class ArticleCreation:
                 group = group_data['group']
                 min_timestamp = group_data['min_timestamp']
                 max_timestamp = group_data['max_timestamp']
-                if max_timestamp - min_timestamp < 10:
+                if max_timestamp - min_timestamp < self.focus_time:
                     # Удаление скриншотов и связанных медиафайлов для группы
                     screenshots_to_delete = Screenshots.objects.filter(
                         group=group)
