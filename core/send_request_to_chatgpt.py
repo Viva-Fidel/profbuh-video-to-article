@@ -3,6 +3,8 @@ from django.core.files.base import ContentFile
 
 from .models import Paragraphs, Videos, Screenshots, Articles
 
+from profbuh_video_to_article.config import *
+
 import time
 import openai
 from openai import OpenAIError
@@ -17,7 +19,7 @@ class ArticleCreation:
         self.annotation_length = annotation_length
         self.video_id = video_id
         self.article_total_length = 0
-        openai.api_key = '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'
+        openai.api_key = OPEN_AI_KEY
 
     def get_response(self):
         paragraphs = Paragraphs.objects.filter(video=self.video_id)
