@@ -1,4 +1,9 @@
 # profbuh-video-to-article
+
+Проект для PROFBUH HACKATHON: Автоматическое создание текстовых публикаций на основе записанного видео
+https://www.zavodit.ru/ru/profile/events-participant/event/32  
+Команда "Bublik the Pug", 11 место :dog:
+
 ## Установка
 
 1. Скачайте архив с моделью Vosk:
